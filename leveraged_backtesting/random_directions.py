@@ -6,6 +6,11 @@ import utils
 
 
 def generate_underlying_data(num_days: int) -> List[utils.DayData]:
+	"""Generates a set of data that goes up for an equal amount of days as it goes down,
+	i.e it should end at a price that is equal to what it started at. Each day's price movement
+	is random with a 50/50 chance of going up or down on a given day, assuming we have not exhausted
+	all our up or down days.
+	"""
 	start_price = 100
 	price_increase_per_day = 1
 
@@ -22,11 +27,13 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 		if direction == 1:
 			if num_ups > 0:
 				close_price = open_price + price_increase_per_day
+				num_ups -= 1
 			else:
 				close_price = open_price - price_increase_per_day
 		if direction == 0:
 			if num_down > 0:
 				close_price = open_price - price_increase_per_day
+				num_down -= 1
 			else:
 				close_price = open_price + price_increase_per_day
 
@@ -36,6 +43,9 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 			open_price=open_price,
 			close_price=close_price
 		))
+
+	# Prove that the open prices of the first day and the close price of the last day are the same.
+	assert data[0].open_price == data[-1].close_price
 
 	return data
 

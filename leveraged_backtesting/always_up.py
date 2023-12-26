@@ -4,6 +4,7 @@ import utils
 
 
 def generate_underlying_data(num_days: int) -> List[utils.DayData]:
+	"""Generates a set of data that always goes up by 1 unit every day."""
 	start_price = 100
 	price_increase_per_day = 1
 

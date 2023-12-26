@@ -4,6 +4,7 @@ import utils
 
 
 def generate_underlying_data(num_days: int) -> List[utils.DayData]:
+	"""Price goes up for 5 days, then falls back down to the original price."""
 	start_price = 100
 	price_increase_per_day = 1
 
