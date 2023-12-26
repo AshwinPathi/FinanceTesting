@@ -57,5 +57,5 @@ if __name__ == '__main__':
 	data = generate_underlying_data(num_days)
 	lev_data = utils.generate_leveraged_data(data, leverage)
 
+	utils.compare_returns(data, lev_data)
 	utils.plot_comparison(data, lev_data)
-

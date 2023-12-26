@@ -51,3 +51,11 @@ def plot_comparison(underlying: List[DayData], leveraged: List[DayData]):
 	plt.title('Levered vs underlying open prices over time')
 	plt.show()
 
+
+def compare_returns(underlying: List[DayData], leveraged: List[DayData]):
+	returns_underlying = 100 * (underlying[-1].close_price - underlying[0].open_price) / underlying[0].open_price
+	returns_leveraged = 100 * (leveraged[-1].close_price - leveraged[0].open_price) / leveraged[0].open_price
+
+	print(f'Returns for unlevered (between open first day and close last day):\n{returns_underlying}%')
+	print()
+	print(f'Returns for levered (between open first day and close last day):\n{returns_leveraged}%')
