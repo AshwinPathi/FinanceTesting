@@ -12,7 +12,7 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 	all our up or down days.
 	"""
 	start_price = 100
-	price_increase_per_day = 1
+	price_percent_increase_per_day = 0.01
 
 	# Number of times the stock goes up or down
 	num_ups = num_days // 2
@@ -26,16 +26,16 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 		direction = random.randint(0, 1)
 		if direction == 1:
 			if num_ups > 0:
-				close_price = open_price + price_increase_per_day
+				close_price = open_price * (1 + price_percent_increase_per_day)
 				num_ups -= 1
 			else:
-				close_price = open_price - price_increase_per_day
+				close_price = open_price * (1 - price_percent_increase_per_day)
 		if direction == 0:
 			if num_down > 0:
-				close_price = open_price - price_increase_per_day
+				close_price = open_price * (1 - price_percent_increase_per_day)
 				num_down -= 1
 			else:
-				close_price = open_price + price_increase_per_day
+				close_price = open_price * (1 + price_percent_increase_per_day)
 
 
 		data.append(utils.DayData(
@@ -43,9 +43,6 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 			open_price=open_price,
 			close_price=close_price
 		))
-
-	# Prove that the open prices of the first day and the close price of the last day are the same.
-	assert data[0].open_price == data[-1].close_price
 
 	return data
 

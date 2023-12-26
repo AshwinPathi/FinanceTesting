@@ -4,27 +4,18 @@ import utils
 
 
 def generate_underlying_data(num_days: int) -> List[utils.DayData]:
-	"""Price goes up by 1% for 5 days, then falls back down to the original price."""
+	"""Generates a set of data that always goes down by 1 percent every day."""
 	start_price = 100
-	price_percent_increase_per_day = 0.01
-
-	# every 5 days we drop to the starting value 
-	sawtooth_period = 5
+	price_percent_increase_per_day = -0.01
 
 	data: List[utils.DayData] = []
 
 	for day_i in range(num_days):
 		open_price = start_price if day_i == 0 else data[day_i - 1].close_price
-
-		if day_i % sawtooth_period == 0:
-			close_price = start_price
-		else:
-			close_price = open_price * (1 + price_percent_increase_per_day)
-
 		data.append(utils.DayData(
 			day=day_i,
 			open_price=open_price,
-			close_price=close_price
+			close_price=open_price * (1 + price_percent_increase_per_day)
 		))
 
 	return data

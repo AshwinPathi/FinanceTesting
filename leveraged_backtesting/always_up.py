@@ -4,9 +4,9 @@ import utils
 
 
 def generate_underlying_data(num_days: int) -> List[utils.DayData]:
-	"""Generates a set of data that always goes up by 1 unit every day."""
+	"""Generates a set of data that always goes up by 1 percent every day."""
 	start_price = 100
-	price_increase_per_day = 1
+	price_percent_increase_per_day = 0.01
 
 	data: List[utils.DayData] = []
 
@@ -15,8 +15,9 @@ def generate_underlying_data(num_days: int) -> List[utils.DayData]:
 		data.append(utils.DayData(
 			day=day_i,
 			open_price=open_price,
-			close_price=open_price + price_increase_per_day
-		))	
+			close_price=open_price * (1 + price_percent_increase_per_day)
+		))
+
 	return data
 
 

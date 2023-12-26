@@ -3,7 +3,8 @@ from typing import NamedTuple, List
 
 import matplotlib.pyplot as plt
 
-
+def percent_change(first: float, last: float) -> float:
+	return (last - first) / first
 
 class DayData(NamedTuple):
 	day: int
@@ -11,8 +12,11 @@ class DayData(NamedTuple):
 	close_price: float
 
 	def percent_change(self) -> float:
-		return (self.close_price - self.open_price) / self.open_price
+		return percent_change(self.open_price, self.close_price)
 
+class Order(NamedTuple):
+	quantity: float
+	price: float
 
 def generate_leveraged_data(underlying_data: List[DayData], leverage: float) -> List[DayData]:
 
@@ -56,6 +60,9 @@ def compare_returns(underlying: List[DayData], leveraged: List[DayData]):
 	returns_underlying = 100 * (underlying[-1].close_price - underlying[0].open_price) / underlying[0].open_price
 	returns_leveraged = 100 * (leveraged[-1].close_price - leveraged[0].open_price) / leveraged[0].open_price
 
+	print('Underlying:')
 	print(f'Returns for unlevered (between open first day and close last day):\n{returns_underlying}%')
+	print(f'Last price: {underlying[-1].close_price}')
 	print()
 	print(f'Returns for levered (between open first day and close last day):\n{returns_leveraged}%')
+	print(f'Last price: {leveraged[-1].close_price}')
